@@ -68,8 +68,14 @@ namespace RekawekApp
 
             command.Parameters.AddWithValue("@id", id);
             conn.Open();
-            command.ExecuteNonQuery();
-            return true;
+            int ilosc = command.ExecuteNonQuery();
+            if (ilosc > 0)
+            {
+                return true;
+            }
+            else {
+                return false;
+            }
         }
 
         public bool UpdateData(int id, string imie, string nazwisko, string numeralbumu)
@@ -83,8 +89,15 @@ namespace RekawekApp
             command.Parameters.AddWithValue("@nazwisko", nazwisko);
             command.Parameters.AddWithValue("@numeralbumu", numeralbumu);
             conn.Open();
-            command.ExecuteNonQuery();
-            return true;
+            int ilosc = command.ExecuteNonQuery();
+            if (ilosc > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
     }

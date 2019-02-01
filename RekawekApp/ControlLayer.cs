@@ -29,9 +29,15 @@ namespace RekawekApp
             QueryDs = dal.DisplayData(id);
 
             //var zmienna = QueryDs.GetXml();
-            StudentList.Add(Convert.ToString(QueryDs.Tables[0].Rows[0]["Imie"]));
-            StudentList.Add(Convert.ToString(QueryDs.Tables[0].Rows[0]["Nazwisko"]));
-            StudentList.Add(Convert.ToString(QueryDs.Tables[0].Rows[0]["NumerAlbumu"]));
+            try {
+                StudentList.Add(Convert.ToString(QueryDs.Tables[0].Rows[0]["Imie"]));
+                StudentList.Add(Convert.ToString(QueryDs.Tables[0].Rows[0]["Nazwisko"]));
+                StudentList.Add(Convert.ToString(QueryDs.Tables[0].Rows[0]["NumerAlbumu"]));
+            }
+            catch (Exception e) {
+
+                return StudentList = null;
+            }
             return StudentList;
 
         }
@@ -45,21 +51,42 @@ namespace RekawekApp
 
         public bool DeletData(string id) {
 
-            int id_studenta = Convert.ToInt16(id);
+            bool execute = false;
 
-            bool execute = dal.DeleteData(id_studenta);
+            try
+            {
+                int id_studenta = Convert.ToInt16(id);
 
-            return true;
+                execute = dal.DeleteData(id_studenta);
+            }
+            catch (Exception e)
+            {
+
+                execute = false;
+
+
+            }
+            return execute;
         }
 
         public bool UpdateData(string id , string imie, string nazwisko, string numeralbumu)
         {
+            bool execute = false;
+            try
+            {
+                int id_studenta = Convert.ToInt16(id);
+                execute = dal.UpdateData(id_studenta, imie, nazwisko, numeralbumu);
+            }
+            catch (Exception e)
+            {
 
-            int id_studenta = Convert.ToInt16(id);
+                execute = false;
+                
 
-            bool execute = dal.UpdateData(id_studenta,imie,nazwisko,numeralbumu);
+            }
+            
 
-            return true;
+            return execute;
         }
     }
 }
